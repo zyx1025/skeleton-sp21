@@ -159,7 +159,7 @@ public class Model extends Observable {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 Tile tile = b.tile(i,j);
-                if(tile.value() == MAX_PIECE){
+                if(tile!=null && tile.value() == MAX_PIECE){
                     return true;
                 }
             }
@@ -173,8 +173,27 @@ public class Model extends Observable {
      * 1. There is at least one empty space on the board.
      * 2. There are two adjacent tiles with the same value.
      */
+    private static int[] delta = {0,-1,0,1,0};
+
     public static boolean atLeastOneMoveExists(Board b) {
-        // TODO: Fill in this function.
+        int n = b.size();
+        if(emptySpaceExists(b)){
+            return true;
+        }
+        //此时没有空方格，检查是否有相邻两个一样的
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                Tile tile = b.tile(i,j);
+                for (int k = 0; k < 4; k++) {
+                    int x = i + delta[k];
+                    int y = j + delta[k+1];
+                    Tile aroundTile = b.tile(x,y);
+                    if(tile.value() == aroundTile.value()){
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
