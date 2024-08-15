@@ -113,6 +113,48 @@ public class Model extends Observable {
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        board.setViewingPerspective(side);
+        int n = this.board.size();
+
+        for (int col = 0; col < n; col += 1) {
+            for (int row = n - 1; row >= 0; row -= 1) {
+                Tile t1 = board.tile(col, row);
+                if (t1 != null) {
+                    for (int row2 = row - 1; row2 >= 0; row2 -= 1) {
+                        Tile t2 = board.tile(col, row2);
+                        if (t2 != null) {
+                            if (t1.value() == t2.value()) {
+                                board.move(col, row, t2);
+                                changed = true;
+                                score += 2 * t1.value();
+                                row = row2;
+                            }
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
+
+        for (int col = 0; col < n; col += 1) {
+            for (int row = n - 1; row >= 0; row -= 1) {
+                Tile t1 = board.tile(col, row);
+                if (t1 == null) {
+                    for (int row2 = row - 1; row2 >= 0; row2 -= 1) {
+                        Tile t2 = board.tile(col, row2);
+                        if (t2 != null) {
+                            board.move(col, row, t2);
+                            changed = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        board.setViewingPerspective(Side.NORTH);
 
         checkGameOver();
         if (changed) {
@@ -187,10 +229,13 @@ public class Model extends Observable {
                 for (int k = 0; k < 4; k++) {
                     int x = i + delta[k];
                     int y = j + delta[k+1];
-                    Tile aroundTile = b.tile(x,y);
-                    if(tile.value() == aroundTile.value()){
-                        return true;
+                    if ( x>=0 && x<n && y>=0 && y<n){
+                        Tile aroundTile = b.tile(x,y);
+                        if(tile != null && aroundTile !=null && tile.value() == aroundTile.value()){
+                            return true;
+                        }
                     }
+
                 }
             }
         }
