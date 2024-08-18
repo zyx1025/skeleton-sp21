@@ -55,9 +55,11 @@ public class LinkedListDequeTest {
 
         lld1.addFirst(30);
 
-		lld1.removeFirst();
+        for (Integer a : lld1){
+            System.out.println(a);
+        }
 
-        lld1.printDeque();
+		lld1.removeFirst();
     }
 
     @Test

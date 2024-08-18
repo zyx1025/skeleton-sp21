@@ -1,6 +1,8 @@
 package deque;
 
-public class LinkedListDeque<T> {
+import java.util.Iterator;
+
+public class LinkedListDeque<T> implements Deque<T>,Iterable<T> {
     class LinkNode{
         T item = null;
         LinkNode prev;
@@ -109,6 +111,25 @@ public class LinkedListDeque<T> {
         return beforeLast.item;
     }
 
+    public T get(int index){
+        LinkNode curr = pointer.prev;
+        for (int i = 0; i < index; i++) {
+            curr = curr.next;
+        }
+        return curr.item;
+    }
+
+    public T getRecursive(int index){
+        return getRecursiveHelper(pointer.prev,index);
+    }
+
+    public T getRecursiveHelper(LinkNode current,int index){
+        if(index==0){
+            return current.item;
+        }
+        return getRecursiveHelper(current.next,index-1);
+    }
+
     public void printDeque(){
         LinkNode node = pointer.prev;
         for (int i = 0; i < size; i++) {
@@ -118,4 +139,39 @@ public class LinkedListDeque<T> {
         System.out.println();
     }
 
+    public Iterator<T> iterator(){
+        return new Iterator<T>() {
+            private LinkNode currentNode = pointer.prev;
+            private boolean isFirst = true;
+            @Override
+            public boolean hasNext() {
+                //循环一圈后回到头节点
+                return isFirst || currentNode != pointer.prev;
+            }
+
+            @Override
+            public T next() {
+                isFirst = false;
+                T item = currentNode.item;
+                currentNode = currentNode.next;
+                return item;
+            }
+        };
+    }
+
+    public boolean equals(Object o){
+        if(! (o instanceof LinkedListDeque)){
+            return false;
+        }
+        LinkedListDeque linkedListDeque = (LinkedListDeque)o;
+        if(linkedListDeque.size() != this.size()){
+            return false;
+        }
+        for (int i = 0; i < size; i++) {
+            if( this.get(i) != linkedListDeque.get(i)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

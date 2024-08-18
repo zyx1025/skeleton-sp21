@@ -2,7 +2,11 @@ package deque;
 
 import org.junit.Test;
 
-public class ArrayDeque<Item> {
+import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.function.Consumer;
+
+public class ArrayDeque<Item> implements Deque<Item>,Iterable<Item>{
     private Item[] items;
     //元素个数上限
     private int limit;
@@ -107,5 +111,47 @@ public class ArrayDeque<Item> {
         items[last] = null;
         size--;
         return result;
+    }
+
+    public Iterator<Item> iterator(){
+        return new Iterator<Item>() {
+            int currentIdx = 0;
+            @Override
+            public boolean hasNext() {
+                return currentIdx != size;
+            }
+
+            @Override
+            public Item next() {
+                Item cur = items[(first+currentIdx+1)%limit];
+                currentIdx++;
+                return cur;
+            }
+        };
+    }
+
+    @Override
+    public void forEach(Consumer<? super Item> action) {
+        Iterable.super.forEach(action);
+    }
+
+    @Override
+    public Spliterator<Item> spliterator() {
+        return Iterable.super.spliterator();
+    }
+
+    public boolean equals(Object o){
+        if(!(o instanceof ArrayDeque)){
+            return false;
+        }
+        if(((ArrayDeque<?>) o).size()!=this.size){
+            return false;
+        }
+        for (int i = 0; i < size; i++) {
+            if(((ArrayDeque<?>) o).get(i) != this.get(i)){
+                return false;
+            }
+        }
+        return true;
     }
 }
