@@ -1,16 +1,15 @@
 package deque;
 
 import java.util.Iterator;
-import java.util.Spliterator;
 import java.util.function.Consumer;
 
 public class ArrayDeque<T> implements Deque<T>,Iterable<T>{
-    private T[] items;
+    protected T[] items;
     //元素个数上限
     private int limit;
 
     //当前数组元素个数
-    private int size;
+    protected int size;
     private int first;
     private int last;
     public ArrayDeque() {
@@ -146,7 +145,7 @@ public class ArrayDeque<T> implements Deque<T>,Iterable<T>{
         }
         int size = this.size();
         for (int i = 0; i < size; i++) {
-            if(((Deque<?>) o).get(i) != this.get(i)){
+            if(!((Deque<?>) o).get(i).equals(this.get(i))){
                 return false;
             }
         }

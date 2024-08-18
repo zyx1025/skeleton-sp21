@@ -139,17 +139,17 @@ public class LinkedListDeque<T> implements Deque<T>,Iterable<T> {
     public Iterator<T> iterator(){
         return new Iterator<T>() {
             private LinkNode currentNode = pointer.prev;
-            private boolean isFirst = true;
+            private int idx = 0;
             @Override
             public boolean hasNext() {
                 //循环一圈后回到头节点
-                return isFirst || currentNode != pointer.prev;
+                return idx != size;
             }
 
             @Override
             public T next() {
-                isFirst = false;
                 T item = currentNode.item;
+                idx++;
                 currentNode = currentNode.next;
                 return item;
             }
@@ -169,7 +169,7 @@ public class LinkedListDeque<T> implements Deque<T>,Iterable<T> {
         }
         int size = this.size();
         for (int i = 0; i < size; i++) {
-            if(((Deque<?>) o).get(i) != this.get(i)){
+            if(!((Deque<?>) o).get(i).equals(this.get(i))){
                 return false;
             }
         }
