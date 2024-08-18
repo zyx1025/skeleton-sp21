@@ -4,26 +4,31 @@ package gh2;
 // import deque.Deque;
 // TODO: maybe more imports
 
+import deque.ArrayDeque;
+import deque.Deque;
+import deque.LinkedListDeque;
+
 //Note: This file will not compile until you complete the Deque implementations
 public class GuitarString {
-    /** Constants. Do not change. In case you're curious, the keyword final
+    /**
+     * Constants. Do not change. In case you're curious, the keyword final
      * means the values cannot be changed at runtime. We'll discuss this and
-     * other topics in lecture on Friday. */
+     * other topics in lecture on Friday.
+     */
     private static final int SR = 44100;      // Sampling Rate
     private static final double DECAY = .996; // energy decay factor
 
     /* Buffer for storing sound data. */
-    // TODO: uncomment the following line once you're ready to start this portion
-    // private Deque<Double> buffer;
+    private Deque<Double> buffer;
 
     /* Create a guitar string of the given frequency.  */
     public GuitarString(double frequency) {
-        // TODO: Create a buffer with capacity = SR / frequency. You'll need to
-        //       cast the result of this division operation into an int. For
-        //       better accuracy, use the Math.round() function before casting.
-        //       Your should initially fill your buffer array with zeros.
+        buffer = new LinkedListDeque<>();
+        int initialSize = (int) Math.round(SR / frequency);
+        for (int i = 0; i < initialSize; i++) {
+            buffer.addLast(0.0);
+        }
     }
-
 
     /* Pluck the guitar string by replacing the buffer with white noise. */
     public void pluck() {
@@ -52,4 +57,3 @@ public class GuitarString {
         return 0;
     }
 }
-    // TODO: Remove all comments that say TODO when you're done.

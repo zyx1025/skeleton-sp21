@@ -2,65 +2,48 @@ package deque;
 
 import java.util.Iterator;
 
-public class LinkedListDeque<T> implements Deque<T>,Iterable<T> {
-    class LinkNode{
-        T item = null;
-        LinkNode prev;
-        LinkNode next;
-        LinkNode(T item, LinkNode prev,LinkNode next){
-            this.item = item;
-            this.prev = prev;
-            this.next = next;
-        }
-
-        LinkNode(){}
-    }
+public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     private int size;
     //哨兵，prev尾，next头
     private LinkNode pointer;
-
-    public LinkedListDeque(){
+    public LinkedListDeque() {
         size = 0;
-        pointer = new LinkNode(null,null,null);
+        pointer = new LinkNode(null, null, null);
     }
 
-    public int size(){
+    public int size() {
         return size;
     }
 
-    public boolean isEmpty(){
-        return size == 0;
-    }
-
-    public void addFirst(T item){
+    public void addFirst(T item) {
         LinkNode beforeFirst = pointer.prev;
         LinkNode beforeLast = pointer.next;
-        LinkNode newFirst = new LinkNode(item,beforeLast,beforeFirst);
-        if(pointer.prev == null){
+        LinkNode newFirst = new LinkNode(item, beforeLast, beforeFirst);
+        if (pointer.prev == null) {
             pointer.next = newFirst;
         }
         pointer.prev = newFirst;
-        if(beforeFirst != null){
+        if (beforeFirst != null) {
             beforeFirst.prev = newFirst;
         }
-        if(beforeLast != null){
+        if (beforeLast != null) {
             beforeLast.next = newFirst;
         }
         size++;
     }
 
-    public void addLast(T item){
+    public void addLast(T item) {
         LinkNode beforeFirst = pointer.prev;
         LinkNode beforeLast = pointer.next;
-        LinkNode newLast = new LinkNode(item,beforeLast,beforeFirst);
-        if(pointer.prev == null){
+        LinkNode newLast = new LinkNode(item, beforeLast, beforeFirst);
+        if (pointer.prev == null) {
             pointer.prev = newLast;
         }
         pointer.next = newLast;
-        if(beforeFirst != null){
+        if (beforeFirst != null) {
             beforeFirst.prev = newLast;
         }
-        if(beforeLast != null){
+        if (beforeLast != null) {
             beforeLast.next = newLast;
         }
         size++;
@@ -81,34 +64,34 @@ public class LinkedListDeque<T> implements Deque<T>,Iterable<T> {
         beforeFirst.next.prev = beforeLast;
         pointer.prev = beforeFirst.next;
         beforeLast.next = beforeFirst.next;
-        if(size==1){
+        if (size == 1) {
             pointer.prev.prev = pointer.next.next = null;
         }
         return beforeFirst.item;
     }
 
-    public T removeLast(){
-        if(pointer.next == null){
+    public T removeLast() {
+        if (pointer.next == null) {
             return null;
         }
         LinkNode beforeFirst = pointer.prev;
         LinkNode beforeLast = pointer.next;
         size--;
-        if(beforeLast.prev == null){
+        if (beforeLast.prev == null) {
             //即元素只有一个，beforeFirst/Last指向同一个结点，该结点prev/next为空
-            pointer = new LinkNode(null,null,null);
+            pointer = new LinkNode(null, null, null);
             return beforeLast.item;
         }
         beforeLast.prev.next = beforeFirst;
         pointer.next = beforeLast.prev;
         beforeFirst.prev = beforeLast.prev;
-        if(size==1){
+        if (size == 1) {
             pointer.prev.prev = pointer.next.next = null;
         }
         return beforeLast.item;
     }
 
-    public T get(int index){
+    public T get(int index) {
         LinkNode curr = pointer.prev;
         for (int i = 0; i < index; i++) {
             curr = curr.next;
@@ -116,18 +99,18 @@ public class LinkedListDeque<T> implements Deque<T>,Iterable<T> {
         return curr.item;
     }
 
-    public T getRecursive(int index){
-        return getRecursiveHelper(pointer.prev,index);
+    public T getRecursive(int index) {
+        return getRecursiveHelper(pointer.prev, index);
     }
 
-    public T getRecursiveHelper(LinkNode current,int index){
-        if(index==0){
+    public T getRecursiveHelper(LinkNode current, int index) {
+        if (index == 0) {
             return current.item;
         }
-        return getRecursiveHelper(current.next,index-1);
+        return getRecursiveHelper(current.next, index - 1);
     }
 
-    public void printDeque(){
+    public void printDeque() {
         LinkNode node = pointer.prev;
         for (int i = 0; i < size; i++) {
             System.out.println(node.item + " ");
@@ -136,10 +119,11 @@ public class LinkedListDeque<T> implements Deque<T>,Iterable<T> {
         System.out.println();
     }
 
-    public Iterator<T> iterator(){
+    public Iterator<T> iterator() {
         return new Iterator<T>() {
             private LinkNode currentNode = pointer.prev;
             private int idx = 0;
+
             @Override
             public boolean hasNext() {
                 //循环一圈后回到头节点
@@ -157,22 +141,37 @@ public class LinkedListDeque<T> implements Deque<T>,Iterable<T> {
     }
 
     @Override
-    public boolean equals(Object o){
-        if(this==o){
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
-        if(!(o instanceof Deque)){
+        if (!(o instanceof Deque)) {
             return false;
         }
-        if(((Deque<?>) o).size()!=this.size()){
+        if (((Deque<?>) o).size() != this.size()) {
             return false;
         }
         int size = this.size();
         for (int i = 0; i < size; i++) {
-            if(!((Deque<?>) o).get(i).equals(this.get(i))){
+            if (!((Deque<?>) o).get(i).equals(this.get(i))) {
                 return false;
             }
         }
         return true;
+    }
+
+    class LinkNode {
+        T item = null;
+        LinkNode prev;
+        LinkNode next;
+
+        LinkNode(T item, LinkNode prev, LinkNode next) {
+            this.item = item;
+            this.prev = prev;
+            this.next = next;
+        }
+
+        LinkNode() {
+        }
     }
 }

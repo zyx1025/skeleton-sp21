@@ -4,7 +4,7 @@ import org.junit.Test;
 
 public class TestArrayDeque {
     @Test
-    public void testArray(){
+    public void testArray() {
         ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
         for (int i = 0; i < 256; i++) {
             arrayDeque.addLast(i);
@@ -18,7 +18,7 @@ public class TestArrayDeque {
             arrayDeque.addLast(i);
         }
 
-        for (Object o:arrayDeque){
+        for (Object o : arrayDeque) {
             System.out.println(o);
         }
     }
