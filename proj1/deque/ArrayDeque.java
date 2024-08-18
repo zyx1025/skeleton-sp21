@@ -75,7 +75,7 @@ public class ArrayDeque<Item> {
     }
 
     public Item get(int i) {
-        return items[i];
+        return items[(first+1+i)%limit];
     }
 
     public int size() {

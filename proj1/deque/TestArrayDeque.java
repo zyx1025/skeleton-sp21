@@ -19,5 +19,6 @@ public class TestArrayDeque {
         arrayDeque.removeFirst();
         arrayDeque.removeLast();
         arrayDeque.printDeque();
+        System.out.println(arrayDeque.get(0));
     }
 }
