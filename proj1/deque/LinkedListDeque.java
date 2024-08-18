@@ -66,25 +66,24 @@ public class LinkedListDeque<T> implements Deque<T>,Iterable<T> {
         size++;
     }
 
-    public T removeFirst(){
-        if(pointer.prev == null){
+    public T removeFirst() {
+        if (pointer.prev == null) {
             return null;
         }
         LinkNode beforeFirst = pointer.prev;
         LinkNode beforeLast = pointer.next;
-
-        if(beforeFirst.next == null){
-            size = 0;
-            pointer = new LinkNode(null,null,null);
+        size--;
+        if (beforeFirst.next == null) {
+            //即元素只有一个，beforeFirst/Last指向同一个结点，该结点prev/next为空
+            pointer = new LinkNode(null, null, null);
             return beforeFirst.item;
-        }else{
-            beforeFirst.next.prev = beforeLast;
         }
-
+        beforeFirst.next.prev = beforeLast;
         pointer.prev = beforeFirst.next;
         beforeLast.next = beforeFirst.next;
-
-        size--;
+        if(size==1){
+            pointer.prev.prev = pointer.next.next = null;
+        }
         return beforeFirst.item;
     }
 
@@ -94,20 +93,18 @@ public class LinkedListDeque<T> implements Deque<T>,Iterable<T> {
         }
         LinkNode beforeFirst = pointer.prev;
         LinkNode beforeLast = pointer.next;
-
+        size--;
         if(beforeLast.prev == null){
             //即元素只有一个，beforeFirst/Last指向同一个结点，该结点prev/next为空
-            size = 0;
             pointer = new LinkNode(null,null,null);
             return beforeLast.item;
-        }else{
-            beforeLast.prev.next = beforeFirst;
         }
-
+        beforeLast.prev.next = beforeFirst;
         pointer.next = beforeLast.prev;
         beforeFirst.prev = beforeLast.prev;
-
-        size--;
+        if(size==1){
+            pointer.prev.prev = pointer.next.next = null;
+        }
         return beforeLast.item;
     }
 
@@ -159,6 +156,7 @@ public class LinkedListDeque<T> implements Deque<T>,Iterable<T> {
         };
     }
 
+    @Override
     public boolean equals(Object o){
         if(! (o instanceof LinkedListDeque)){
             return false;

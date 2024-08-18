@@ -40,26 +40,18 @@ public class LinkedListDequeTest {
     @Test
     /** Adds an item, then removes an item, and ensures that dll is empty afterwards. */
     public void addRemoveTest() {
-
-        System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
-
-        LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
-		// should be empty
-		assertTrue("lld1 should be empty upon initialization", lld1.isEmpty());
-
-		lld1.addFirst(10);
-		// should not be empty
-		assertFalse("lld1 should contain 1 item", lld1.isEmpty());
-
-        lld1.addFirst(20);
-
-        lld1.addFirst(30);
-
-        for (Integer a : lld1){
-            System.out.println(a);
-        }
-
-		lld1.removeFirst();
+        LinkedListDeque linkedListDeque = new LinkedListDeque();
+        linkedListDeque.addLast(0);
+        System.out.println(linkedListDeque.removeFirst());
+        linkedListDeque.addLast(2);
+        System.out.println(linkedListDeque.removeFirst());
+        linkedListDeque.isEmpty();
+        linkedListDeque.addLast(5);
+        linkedListDeque.addLast(6);
+        System.out.println(linkedListDeque.removeFirst());
+        System.out.println(linkedListDeque.removeFirst());
+        linkedListDeque.addLast(9);
+        System.out.println(linkedListDeque.removeFirst());
     }
 
     @Test

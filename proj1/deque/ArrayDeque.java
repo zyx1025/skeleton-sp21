@@ -1,13 +1,11 @@
 package deque;
 
-import org.junit.Test;
-
 import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
-public class ArrayDeque<Item> implements Deque<Item>,Iterable<Item>{
-    private Item[] items;
+public class ArrayDeque<T> implements Deque<T>,Iterable<T>{
+    private T[] items;
     //元素个数上限
     private int limit;
 
@@ -16,7 +14,7 @@ public class ArrayDeque<Item> implements Deque<Item>,Iterable<Item>{
     private int first;
     private int last;
     public ArrayDeque() {
-        items = (Item[]) new Object[8];
+        items = (T[]) new Object[8];
         limit = 8;
         size = 0;
         first = 3;
@@ -24,7 +22,7 @@ public class ArrayDeque<Item> implements Deque<Item>,Iterable<Item>{
     }
 
     private void resize(int capacity) {
-        Item[] a = (Item[]) new Object[capacity];
+        T[] a = (T[]) new Object[capacity];
         int idx = (first+1) % limit;
         for (int i = 0; i < limit; i += 1) {
             a[i] = items[idx];
@@ -37,7 +35,7 @@ public class ArrayDeque<Item> implements Deque<Item>,Iterable<Item>{
         items = a;
     }
 
-    public void addLast(Item x) {
+    public void addLast(T x) {
         if (size == limit) {
             resize(size * 2);
         }
@@ -47,7 +45,7 @@ public class ArrayDeque<Item> implements Deque<Item>,Iterable<Item>{
         size++;
     }
 
-    public void addFirst(Item x) {
+    public void addFirst(T x) {
         if (size == limit) {
             resize(size * 2);
         }
@@ -56,15 +54,15 @@ public class ArrayDeque<Item> implements Deque<Item>,Iterable<Item>{
         first = (first - 1 + limit) % limit;
         size++;
     }
-    public Item getLast() {
+    public T getLast() {
         return items[(last-1+limit)%limit];
     }
 
-    public Item getFirst(){
+    public T getFirst(){
         return items[(first+1) %limit];
     }
 
-    public Item removeFirst(){
+    public T removeFirst(){
         if(size==0){
             return null;
         }
@@ -72,13 +70,13 @@ public class ArrayDeque<Item> implements Deque<Item>,Iterable<Item>{
             resize(items.length / 4);
         }
         first = (first+1) % limit;
-        Item result = items[first];
+        T result = items[first];
         items[first] = null;
         size--;
         return result;
     }
 
-    public Item get(int i) {
+    public T get(int i) {
         return items[(first+1+i)%limit];
     }
 
@@ -99,7 +97,7 @@ public class ArrayDeque<Item> implements Deque<Item>,Iterable<Item>{
         System.out.println();
     }
 
-    public Item removeLast() {
+    public T removeLast() {
         if(size==0){
             return null;
         }
@@ -107,14 +105,14 @@ public class ArrayDeque<Item> implements Deque<Item>,Iterable<Item>{
             resize(items.length / 4);
         }
         last = (last-1+limit) % limit;
-        Item result = items[last];
+        T result = items[last];
         items[last] = null;
         size--;
         return result;
     }
 
-    public Iterator<Item> iterator(){
-        return new Iterator<Item>() {
+    public Iterator<T> iterator(){
+        return new Iterator<T>() {
             int currentIdx = 0;
             @Override
             public boolean hasNext() {
@@ -122,8 +120,8 @@ public class ArrayDeque<Item> implements Deque<Item>,Iterable<Item>{
             }
 
             @Override
-            public Item next() {
-                Item cur = items[(first+currentIdx+1)%limit];
+            public T next() {
+                T cur = items[(first+currentIdx+1)%limit];
                 currentIdx++;
                 return cur;
             }
@@ -131,15 +129,16 @@ public class ArrayDeque<Item> implements Deque<Item>,Iterable<Item>{
     }
 
     @Override
-    public void forEach(Consumer<? super Item> action) {
+    public void forEach(Consumer<? super T> action) {
         Iterable.super.forEach(action);
     }
 
     @Override
-    public Spliterator<Item> spliterator() {
+    public Spliterator<T> spliterator() {
         return Iterable.super.spliterator();
     }
 
+    @Override
     public boolean equals(Object o){
         if(!(o instanceof ArrayDeque)){
             return false;
