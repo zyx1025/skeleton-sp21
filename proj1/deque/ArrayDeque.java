@@ -132,22 +132,20 @@ public class ArrayDeque<T> implements Deque<T>,Iterable<T>{
     public void forEach(Consumer<? super T> action) {
         Iterable.super.forEach(action);
     }
-
-    @Override
-    public Spliterator<T> spliterator() {
-        return Iterable.super.spliterator();
-    }
-
     @Override
     public boolean equals(Object o){
-        if(!(o instanceof ArrayDeque)){
+        if(this==o){
+            return true;
+        }
+        if(!(o instanceof Deque)){
             return false;
         }
-        if(((ArrayDeque<?>) o).size()!=this.size){
+        if(((Deque<?>) o).size()!=this.size()){
             return false;
         }
+        int size = this.size();
         for (int i = 0; i < size; i++) {
-            if(((ArrayDeque<?>) o).get(i) != this.get(i)){
+            if(((Deque<?>) o).get(i) != this.get(i)){
                 return false;
             }
         }
