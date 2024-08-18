@@ -24,12 +24,13 @@ public class ArrayDeque<T> implements Deque<T>,Iterable<T>{
     private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
         int idx = (first+1) % limit;
-        for (int i = 0; i < limit; i += 1) {
+        int bound =  Math.min(capacity,limit);
+        for (int i = 0; i < bound; i += 1) {
             a[i] = items[idx];
             idx = (idx+1) % limit;
         }
         first = capacity-1;
-        last = limit;
+        last = bound;
         limit = capacity;
 
         items = a;
