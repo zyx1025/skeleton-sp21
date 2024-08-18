@@ -94,6 +94,7 @@ public class LinkedListDeque<T> {
         LinkNode beforeLast = pointer.next;
 
         if(beforeLast.prev == null){
+            //即元素只有一个，beforeFirst/Last指向同一个结点，该结点prev/next为空
             size = 0;
             pointer = new LinkNode(null,null,null);
             return beforeLast.item;
