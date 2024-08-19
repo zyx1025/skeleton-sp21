@@ -39,7 +39,7 @@ public class GuitarString {
      */
     public void tic() {
         double firstNum = buffer.removeFirst();
-        double newNum = (firstNum + sample()) * DECAY;
+        double newNum = (firstNum + sample()) * DECAY * 0.5;
         buffer.addLast(newNum);
     }
 
