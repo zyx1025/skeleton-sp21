@@ -20,7 +20,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         last = 4;
     }
 
-    public ArrayDeque(int initialSize){
+    public ArrayDeque(int initialSize) {
         items = (T[]) new Object[initialSize];
         limit = initialSize;
         size = 0;
@@ -150,8 +150,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (((Deque<?>) o).size() != this.size()) {
             return false;
         }
-        int size = this.size();
-        for (int i = 0; i < size; i++) {
+        int size1 = this.size();
+        for (int i = 0; i < size1; i++) {
             if (!((Deque<?>) o).get(i).equals(this.get(i))) {
                 return false;
             }
