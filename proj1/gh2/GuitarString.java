@@ -14,19 +14,23 @@ public class GuitarString {
 
     /* Buffer for storing sound data. */
     private Deque<Double> buffer;
-    private int initialSize;
 
     /* Create a guitar string of the given frequency.  */
     public GuitarString(double frequency) {
         buffer = new LinkedListDeque<>();
-        this.initialSize = (int) Math.round(SR / frequency);
+        int initialSize = (int) Math.round(SR / frequency);
+        for (int i = 0; i < initialSize; i++) {
+            buffer.addLast(0.0);
+        }
     }
 
     /* Pluck the guitar string by replacing the buffer with white noise. */
     public void pluck() {
-        for (int i = 0; i < initialSize; i++) {
+        int limit = buffer.size();
+        for (int i = 0; i < limit; i++) {
             double r = Math.random() - 0.5;
-            buffer.addLast(r);
+            buffer.removeFirst();
+            buffer.addFirst(r);
         }
     }
 
