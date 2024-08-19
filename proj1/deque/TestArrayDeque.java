@@ -3,6 +3,7 @@ package deque;
 import org.junit.Test;
 
 public class TestArrayDeque {
+
     @Test
     public void testArray() {
         ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();

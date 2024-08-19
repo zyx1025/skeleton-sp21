@@ -6,6 +6,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     private int size;
     //哨兵，prev尾，next头
     private LinkNode pointer;
+
     public LinkedListDeque() {
         size = 0;
         pointer = new LinkNode(null, null, null);
@@ -103,7 +104,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         return getRecursiveHelper(pointer.prev, index);
     }
 
-    public T getRecursiveHelper(LinkNode current, int index) {
+    private T getRecursiveHelper(LinkNode current, int index) {
         if (index == 0) {
             return current.item;
         }
@@ -160,7 +161,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         return true;
     }
 
-    class LinkNode {
+    private class LinkNode {
         T item = null;
         LinkNode prev;
         LinkNode next;

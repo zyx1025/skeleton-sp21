@@ -4,9 +4,9 @@ import java.util.Iterator;
 import java.util.function.Consumer;
 
 public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
-    protected T[] items;
+    private T[] items;
     //当前数组元素个数
-    protected int size;
+    private int size;
     //元素个数上限
     private int limit;
     private int first;
@@ -15,14 +15,6 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     public ArrayDeque() {
         items = (T[]) new Object[8];
         limit = 8;
-        size = 0;
-        first = 3;
-        last = 4;
-    }
-
-    public ArrayDeque(int initialSize) {
-        items = (T[]) new Object[initialSize];
-        limit = initialSize;
         size = 0;
         first = 3;
         last = 4;
@@ -61,14 +53,6 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         items[first] = x;
         first = (first - 1 + limit) % limit;
         size++;
-    }
-
-    public T getLast() {
-        return items[(last - 1 + limit) % limit];
-    }
-
-    public T getFirst() {
-        return items[(first + 1) % limit];
     }
 
     public T removeFirst() {
@@ -132,11 +116,6 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
                 return cur;
             }
         };
-    }
-
-    @Override
-    public void forEach(Consumer<? super T> action) {
-        Iterable.super.forEach(action);
     }
 
     @Override
