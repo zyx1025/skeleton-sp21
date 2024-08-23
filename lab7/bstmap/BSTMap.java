@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class BSTMap<K extends Comparable,V> implements Map61B<K,V>{
+public class BSTMap<K extends Comparable<K>,V> implements Map61B<K,V>{
     private BSTNode root = null;
     private HashSet<K> keySet = new HashSet<>();
     private int size = 0;
@@ -109,7 +109,7 @@ public class BSTMap<K extends Comparable,V> implements Map61B<K,V>{
         return removedValue;
     }
 
-    public V removedValue;
+    private V removedValue;
     private BSTNode removeNode(BSTNode node,K key){
         if (node!=null){
             int delta = key.compareTo(node.key);
